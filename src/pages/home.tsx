@@ -1,9 +1,10 @@
 import { Layout } from "../layout"
 import React from "react"
+import Slideshow from "../components/Slideshow"
 
 const Home = () => {
     return <Layout>
-        Welcome to my humble abode
+        <Slideshow></Slideshow>
     </Layout>
 }
 export default Home

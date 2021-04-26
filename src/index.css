@@ -5,3 +5,7 @@ body {
   font-family: "Poppins", sans-serif;
   margin: 0;
 }
+
+.slick-arrow::before {
+  color: #838383 !important;
+}
