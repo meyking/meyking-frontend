@@ -1106,7 +1106,8 @@
 
 "@sanity/desk-tool@^2.9.1":
   version "2.9.1"
-  resolved "https://registry.npmjs.org/@sanity/desk-tool/-/desk-tool-2.9.1.tgz#10d05b858208531c2c01e796b688bd795b8f78d9"
+  resolved "https://registry.yarnpkg.com/@sanity/desk-tool/-/desk-tool-2.9.1.tgz#10d05b858208531c2c01e796b688bd795b8f78d9"
+  integrity sha512-6sFe5HtGn6Eoc0+xVIkX+i1ZxahH8xxb/OapZ9hD7vliku6q8Ej4QPY+pDVJI7mjcbTUzwif02GEuqXkIsOWJQ==
   dependencies:
     "@popperjs/core" "^2.5.4"
     "@reach/auto-id" "^0.13.2"
