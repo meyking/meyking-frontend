@@ -4,7 +4,7 @@
     "name": "meyking"
   },
   "api": {
-    "projectId": "ghhr9dbc",
+    "projectId": "qa4hnhox",
     "dataset": "production"
   },
   "plugins": [
@@ -12,8 +12,7 @@
     "@sanity/components",
     "@sanity/default-layout",
     "@sanity/default-login",
-    "@sanity/desk-tool",
-    "barcode-input"
+    "@sanity/desk-tool"
   ],
   "env": {
     "development": {
