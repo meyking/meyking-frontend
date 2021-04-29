@@ -1,55 +1,44 @@
-import React from 'react'
-import {graphql, StaticQuery} from "gatsby"
-import { Layout } from '../layout'
-const Products = () => {
-    return <Layout>Welcome to my humble products</Layout>
-}
+import React from "react";
+import { graphql, StaticQuery, useStaticQuery } from "gatsby";
+import { Layout } from "../layout";
+import Image from "gatsby-image";
 
 const query = graphql`
-query MyQuery {
-    allSanityProduct {
-      edges {
-        node {
-          id
-          product
-          slug {
-            _key
-            _type
-            current
-          }
-          thumbnail {
-            _key
-            _type
-            _rawAsset
-            _rawHotspot
-            _rawCrop
-          }
-          _createdAt
-          _id
-          _key
-          _rawCategories
-          _rawImages
-          _rawSlug
-          _rawThumbnail
-          _rev
-          _type
-          _updatedAt
-          description
-          parent {
-            id
-          }
-          images {
-            _key
-          }
+    query MyQuery {
+        allSanityProduct {
+            edges {
+                node {
+                    id
+                    thumbnail {
+                        asset {
+                            gatsbyImageData
+                        }
+                    }
+                    product
+                }
+            }
         }
-      }
     }
-  }
-  
-  
-`
+`;
 
-export default () => <StaticQuery render={(data) => {
-    return <pre>{JSON.stringify(data,null,2)}</pre>
-}} query={query}/>
+const Product = ({ product, image }) => {
+    return <div>Product: {product}</div>;
+};
 
+const Products = () => {
+    const data = useStaticQuery(query);
+    console.log(data);
+    debugger
+    const processed = data.allSanityProduct.edges.map(({ node }) => {
+        const { product } = node;
+        const image = node.thumbnail.asset.gatsbyImageData;
+        return { product, image };
+    });
+
+    return <Layout>
+        Welcome to my humble products
+        {processed.map(productData => <Product {...productData}/>)}
+    </Layout>;
+};
+
+export default Products;

@@ -8,7 +8,7 @@ module.exports = {
         {
             resolve: "gatsby-plugin-manifest",
             options: {
-                icon: "src/images/icon.png",
+                icon: "src/images/logo.png",
             },
         },
         "gatsby-plugin-sharp",
@@ -19,9 +19,7 @@ module.exports = {
             options: {
                 projectId: "qa4hnhox",
                 dataset: "production",
-                overlayDrafts: true,
                 watchMode: true,
-                token : "skHxt2zBjXOBIZTWwtaKvEJjojrggdLaVJap1MELa9ibQjV1FP8ze2XyM2Or9hHxJroXYVw6HbP3SJwRQTAUtAksGvyxvNa7LyxwMw52woTi9QwtZmrZ8uKp4VIRT1uVh1qmBW6V7scjPCMNI74I8QooNN8qgRNVMUsHFLHMlSzxRatlg6An"
             },
         },
         {

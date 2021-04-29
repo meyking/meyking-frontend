@@ -50,11 +50,11 @@ const useStyles = makeStyles({
         },
     },
 });
-const sliderQuery = graphql`
-    query Image {
-
-    }
-`
+//const sliderQuery = graphql`
+    //query Image {
+        
+    //}
+//`
 const SimpleSlider = () => {
     const settings = {
         dots: true,
@@ -63,7 +63,7 @@ const SimpleSlider = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
     };
-    const data = useStaticQuery(sliderQuery)
+    //const data = useStaticQuery(sliderQuery)
     const classes = useStyles();
     return (
         <div className={classes.root}>
