@@ -4,6 +4,14 @@ module.exports = {
     },
     plugins: [
         "gatsby-plugin-image",
+        `gatsby-plugin-netlify`,
+        {
+            resolve: `gatsby-plugin-material-ui`,
+            options: {
+                disableAutoprefixing: true,
+                disableMinification: true,
+            },
+        },
         "gatsby-plugin-react-helmet",
         {
             resolve: "gatsby-plugin-manifest",
