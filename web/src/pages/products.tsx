@@ -97,7 +97,7 @@ const useProductsStyles = makeStyles({
     productsContainer: {
         display: "grid",
         gridGap: "50px",
-        gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+        gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))",
         width: "90%",
         minWidth: "500",
         margin: "auto",

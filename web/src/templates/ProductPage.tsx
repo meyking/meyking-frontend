@@ -41,6 +41,7 @@ const useProductPageStyles = makeStyles({
 
 const ProductPage = (props) => {
     const classes = useProductPageStyles();
+    console.log(props)
     const {
         thumbnail: thumbnailData,
         product,
@@ -48,7 +49,7 @@ const ProductPage = (props) => {
         Categories,
         _rawDescription,
         id,
-    } = props.pageResources.json.pageContext;
+    } = props.pageContext;
     const categories = Categories.map((category) => category.title);
     const mainCategory = categories[0];
     const thumbnail = thumbnailData.asset.gatsbyImageData;
