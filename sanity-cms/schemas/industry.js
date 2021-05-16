@@ -1,15 +1,16 @@
+
 // category.js
 
 export default {
-  title: "Category",
-  name: "category",
+  title: "Industry",
+  name: "industry",
   type: "document",
   fields: [
     {
       title: "Title",
       name: "title",
       type: "string",
-      description: "Title of the category (Bags)",
+      description: "Name of the industry",
     },
     // add a unique slug field for queries, permalinks etc
     {
