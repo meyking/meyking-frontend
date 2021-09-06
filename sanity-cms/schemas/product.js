@@ -13,6 +13,12 @@ export default {
       description: "The product name : (An awesome bag)",
     },
     {
+      title: "Product ID",
+      name: "productId", // An awesome bag
+      type: "string",
+        description: "The product ID  (example : 234123)",
+    },
+    {
       title: "Description",
       name: "description",
       type: "array",

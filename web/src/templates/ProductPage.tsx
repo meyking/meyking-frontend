@@ -6,55 +6,82 @@ import BlockContent from "@sanity/block-content-to-react";
 
 const useProductPageStyles = makeStyles({
     container: {
-        display: "grid",
+        display: "flex",
         marginTop: "2rem",
-        gridTemplateColumns: "repeat(auto-fit,minmax(1000px,1fr))",
-        "@media (min-width:950px)": {
-            gridTemplateColumns: "40vw 60vw",
-        },
-        width: "90%",
-        minWidth: "500",
+        width: "95%",
+        justifyContent: "space-evenly",
         margin: "auto",
-        fontSize : "2.3vmin"
+        fontSize: "1rem",
     },
     image: {
-        width: "100%",
-        padding : "3rem",
-        maxWidth : "600px",
-        boxSizing : "border-box"
+        //width: "50vw",
+        paddingTop: "0",
+        boxSizing: "border-box",
+        marginRight : "2rem",
+        maxWidth : "500px"
         //maxWidth: "500px",
     },
 
     productName: {
-        fontSize: "2em",
+        fontSize: "1.5em",
         fontWeight: 500,
     },
     categoryName: {
-        fontSize: "1em",
+        fontSize: "0.8em",
     },
     description: {
         fontSize: "1em",
         fontWeight: 600,
     },
-    descriptionContainer: {},
+    descriptionContainer: {
+        fontFamily: "Poppins",
+        fontWeight: 300,
+    },
+    block : {
+        "& > h2" : {
+            textDecoration : "none",
+            fontWeight : 400,
+            fontSize : "1em"
+        },
+        "& > *" : {
+            fontSize : "0.7em"
+        },
+        "& > ul" : {
+            paddingInlineStart : "20px"
+        }
+    }
 });
 
 const ProductPage = (props) => {
     const classes = useProductPageStyles();
-    console.log(props)
+    console.log(props);
     const {
         thumbnail: thumbnailData,
         product,
         slug,
         Categories,
         _rawDescription,
+        images: imagesData,
         id,
     } = props.pageContext;
     const categories = Categories.map((category) => category.title);
     const mainCategory = categories[0];
     const thumbnail = thumbnailData.asset.gatsbyImageData;
+    const noImage = imagesData == null || imagesData.length === 0;
     const blocks = _rawDescription;
-
+    let images, imageComponents;
+    if (!noImage) {
+        images = imagesData.map((image) => image.asset.gatsbyImageData);
+        imageComponents = images.map((gatsbyImageData) => (
+            <div className={classes.image}>
+                <GatsbyImage
+                    image={gatsbyImageData}
+                    alt="alternative product image"
+                />
+            </div>
+        ));
+    }
+    debugger
     return (
         <Layout>
             <div className={classes.container}>
@@ -67,9 +94,8 @@ const ProductPage = (props) => {
                 <div>
                     <div className={classes.categoryName}>{mainCategory}</div>
                     <div className={classes.productName}>{product}</div>
-                    <div className={classes.description}>Description</div>
                     <div className={classes.descriptionContainer}>
-                        <BlockContent blocks={blocks} />
+                        <BlockContent blocks={blocks} className={classes.block} />
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { graphql, StaticQuery, useStaticQuery, Link } from "gatsby";
 import { Layout } from "../layout";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { makeStyles } from "@material-ui/styles";
+import Carousel from "react-grid-carousel";
 
 const query = graphql`
     query MyQuery {
@@ -26,18 +27,27 @@ const query = graphql`
                 }
             }
         }
+        allSanityCategory {
+            edges {
+                node {
+                    title
+                }
+            }
+        }
     }
 `;
 
-const useStyles = makeStyles(({
-    imageContainer: hovered => ( {
-        filter : hovered ? "brightness(80%)" : "none",
+const useStyles = makeStyles({
+    imageContainer: (hovered) => ({
+        filter: hovered ? "brightness(80%)" : "none",
         transitionDuration: "300ms",
     }),
     productName: {
-        fontSize: "1.5rem",
+        fontSize: "0.9em",
     },
-    category: {},
+    category: {
+        fontSize: "0.7em",
+    },
     productImage: {
         position: "relative",
     },
@@ -48,17 +58,19 @@ const useStyles = makeStyles(({
     viewProduct: {
         background: "white",
         color: "black",
-        width: "60%",
-        textAlign : "center",
+        width: "50%",
+        textAlign: "center",
+        fontSize: "0.8em",
         zIndex: 10000,
         position: "absolute",
-        padding : "1em 2em",
+        padding: "1em 2em",
         top: "50%",
-        opacity : "85%",
+        opacity: "85%",
         left: "50%",
         transform: "translate(-50%,-50%)",
     },
-}));
+});
+
 const Product = ({ product, image, categories, slug }) => {
     const [hovered, setHovered] = useState(false);
     const classes = useStyles(hovered);
@@ -68,7 +80,10 @@ const Product = ({ product, image, categories, slug }) => {
                 <div className={classes.productImage}>
                     <div>
                         {hovered && (
-                            <div className={classes.viewProduct} onMouseEnter={() => setHovered(true)}>
+                            <div
+                                className={classes.viewProduct}
+                                onMouseEnter={() => setHovered(true)}
+                            >
                                 View Product
                             </div>
                         )}
@@ -97,21 +112,31 @@ const useProductsStyles = makeStyles({
     productsContainer: {
         display: "grid",
         gridGap: "50px",
-        gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))",
+        gridTemplateColumns: "repeat(auto-fit,minmax(max(20vw,100px),1fr))",
         width: "90%",
-        minWidth: "500",
+        minWidth: "500px",
         margin: "auto",
     },
     title: {
-        fontSize: "3rem",
+        fontSize: "2rem",
         textAlign: "center",
         fontFamily: "Montserrat",
         marginBottom: "3rem",
     },
+    categorySlider: {
+        textAlign: "center",
+        marginBottom : "2rem",
+        width : "95%",
+        margin : "auto"
+
+    },
+    carouselItem: {
+        textAlign: "center",
+    },
 });
 const Products = () => {
-    const data = useStaticQuery(query);
     const classes = useProductsStyles();
+    const data = useStaticQuery(query);
     const processed = data.allSanityProduct.edges.map(({ node }) => {
         const { product } = node;
         const image = node.thumbnail.asset.gatsbyImageData;
@@ -119,10 +144,20 @@ const Products = () => {
         const slug = node.slug.current;
         return { product, image, categories, slug };
     });
+    const allCategories = data.allSanityCategory.edges.map(({ node }) => (
+        <Carousel.Item>
+            <div className={classes.carouselItem}>{node.title}</div>
+        </Carousel.Item>
+    ));
 
     return (
         <Layout>
-            <div className={classes.title}> Explore Our Products </div>
+            <div className={classes.title}> Explore our products </div>
+            <div className={classes.categorySlider}>
+                <Carousel cols={3} rows={1} loop>
+                    {allCategories}
+                </Carousel>
+            </div>
             <div className={classes.productsContainer}>
                 {processed.map((productData) => (
                     <Product {...productData} />

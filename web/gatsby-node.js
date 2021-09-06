@@ -17,11 +17,15 @@ exports.createPages = async ({ graphql, actions, reporter, createNodeId }) => {
                         thumbnail {
                             asset {
                                 gatsbyImageData(aspectRatio: 1, fit: CROP)
-                                #gatsbyImageData
                             }
                         }
                         product
                         _rawDescription
+                        images {
+                            asset {
+                                gatsbyImageData(aspectRatio: 1, fit: CROP)
+                            }
+                        }
                         slug {
                             current
                         }

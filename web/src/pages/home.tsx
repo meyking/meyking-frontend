@@ -3,6 +3,8 @@ import React from "react";
 import Slideshow from "../components/Slideshow";
 import { makeStyles } from "@material-ui/styles";
 import {StaticImage} from "gatsby-plugin-image";
+import Carousel from "../components/Carousel"
+
 
 const useStyles = makeStyles({
     exploreContainer: {
@@ -49,11 +51,13 @@ const useStyles = makeStyles({
         maxWidth : "80vw"
     }
 });
+
+
 const Home = () => {
     const classes = useStyles();
     return (
         <Layout>
-            <Slideshow></Slideshow>
+            <Slideshow hideAboutUs={false}></Slideshow>
             <div className={classes.exploreContainer}>
                 <div className={classes.exploreHeaderContainer}>
                         <div className={classes.exploreHeaderLine}></div>
@@ -62,15 +66,7 @@ const Home = () => {
                         </h1>
                         <div className={classes.exploreHeaderLine}></div>
                 </div>
-                <div className={classes.exploreProductContainer}>
-                    {new Array(3).fill(1).map(()=>{
-                        return (
-                            <div className={classes.exploreProduct}>
-                                <StaticImage src="src/images/logo.png" alt="product"/>
-                            </div>
-                        )
-                    })}
-                </div>
+                <Carousel/>
             </div>
         </Layout>
     );

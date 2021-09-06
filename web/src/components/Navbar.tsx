@@ -93,6 +93,9 @@ export default () => {
                     <UnderlinableLink to="/products">
                         Our Products
                     </UnderlinableLink>
+                    <UnderlinableLink to="/about-us">
+                        About Us
+                    </UnderlinableLink>
                     <UnderlinableLink to="/contact-us">
                         Contact Us
                     </UnderlinableLink>

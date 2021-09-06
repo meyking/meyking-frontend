@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { makeStyles } from "@material-ui/styles";
+import { useMediaQuery } from "@material-ui/core";
+import { Link } from "gatsby";
 import Img from "gatsby-image";
+import { StaticImage } from "gatsby-plugin-image";
 
 const useStyles = makeStyles({
     root: {
@@ -14,30 +14,56 @@ const useStyles = makeStyles({
         padding: 30,
     },
     bannerBranding: {
-        paddingLeft: 20,
+        display: "flex",
+        alignItems: "flex-start",
     },
     bannerShopNow: {
+        '&:hover' : {
+            background : "#4a5863",
+            transitionDuration : "200ms"
+        },
         background: "#4D5E6B",
         color: "white",
         padding: 10,
+        fontFamily : "Poppins",
+        fontSize : "1.2rem",
         border: "none",
         paddingLeft: 20,
         paddingRight: 20,
         marginTop: 10,
+        "& > a" : {
+            color : "white",
+            textDecoration : "none",
+        }
     },
     bannerContainer: {
         display: "flex",
+        position: "relative",
     },
     bannerTitle: {
         margin: 0,
+        paddingTop: 0,
+        fontSize: "3rem",
+        lineHeight : "1",
         fontWeight: 500,
+    },
+    hero: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+    },
+    lace: {
+        width: "60vmin",
+        maxWidth: "40vw",
+        marginRight: "5vmin",
     },
     rectangleContainer: {
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        height: 80,
+        height: "100px",
+        marginRight: "1rem",
+        transform: "translateY(5px)",
         "& > *": {
             flexGrow: 4,
             background: "#0065B3",
@@ -51,51 +77,49 @@ const useStyles = makeStyles({
     },
 });
 //const sliderQuery = graphql`
-    //query Image {
-        
-    //}
+//query Image {
+
+//}
 //`
-const SimpleSlider = () => {
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-    };
-    //const data = useStaticQuery(sliderQuery)
+const SimpleSlider = ({hideAboutUs}) => {
     const classes = useStyles();
+    const matches = useMediaQuery("(min-width:600px)");
     return (
         <div className={classes.root}>
-            <Slider {...settings}>
-                <div>
-                    <div className={classes.bannerSlide}>
-                        <div className={classes.bannerContainer}>
+            <div className={classes.hero}>
+                <div className={classes.bannerSlide}>
+                    <div className={classes.bannerContainer}>
+                        <div className={classes.bannerBranding}>
                             <div className={classes.rectangleContainer}>
                                 <div></div>
                                 <div></div>
                             </div>
-                            <div className={classes.bannerBranding}>
+                            <div>
                                 <h1 className={classes.bannerTitle}>
                                     MEYKING ENTREPRISE
                                 </h1>
-                                <span>
+                                <div>
                                     Your one-stop destination for custom
                                     packaging
-                                </span>
+                                </div>
+                                {!hideAboutUs && 
+                                <button className={classes.bannerShopNow}>
+                                    <Link to="/about-us">ABOUT US</Link>
+                                </button>}
                             </div>
                         </div>
-                        <button className={classes.bannerShopNow}>
-                            SHOP NOW
-                        </button>
                     </div>
-                    <Img ></Img>
                 </div>
-
                 <div>
-                    <h3>2</h3>
+                    {matches && (
+                        <StaticImage
+                            src="../images/hero-image.png"
+                            alt="Box with Laces"
+                            className={classes.lace}
+                        />
+                    )}
                 </div>
-            </Slider>
+            </div>
         </div>
     );
 };
