@@ -3,13 +3,15 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import { makeStyles } from "@material-ui/styles";
 import { Layout } from "../layout";
 import BlockContent from "@sanity/block-content-to-react";
+import Button from "../components/Button"
 
 const useProductPageStyles = makeStyles({
     container: {
-        display: "flex",
+        display: "grid",
+        gridTemplateColumns : "repeat(auto-fit,minmax(240px,1fr))",
         marginTop: "2rem",
         width: "95%",
-        justifyContent: "space-evenly",
+        //justifyContent: "space-evenly",
         margin: "auto",
         fontSize: "1rem",
     },
@@ -18,7 +20,12 @@ const useProductPageStyles = makeStyles({
         paddingTop: "0",
         boxSizing: "border-box",
         marginRight : "2rem",
-        maxWidth : "500px"
+        //maxWidth: "500px",
+        
+        height : "100vh",
+        "@media (max-width : 900px)" : {
+            height : "inherit"
+        }
         //maxWidth: "500px",
     },
 
@@ -37,18 +44,22 @@ const useProductPageStyles = makeStyles({
         fontFamily: "Poppins",
         fontWeight: 300,
     },
-    block : {
-        "& > h2" : {
-            textDecoration : "none",
-            fontWeight : 400,
-            fontSize : "1em"
+    block: {
+        "& > h2": {
+            textDecoration: "none",
+            fontWeight: 400,
+            fontSize: "1em",
         },
-        "& > *" : {
-            fontSize : "0.7em"
+        "& > *": {
+            fontSize: "0.7em",
         },
-        "& > ul" : {
-            paddingInlineStart : "20px"
-        }
+        "& > ul": {
+            paddingInlineStart: "20px",
+        },
+    },
+    button : {
+        fontSize : "0.8em",
+        fontWeight : 600
     }
 });
 
@@ -81,7 +92,6 @@ const ProductPage = (props) => {
             </div>
         ));
     }
-    debugger
     return (
         <Layout>
             <div className={classes.container}>
@@ -94,8 +104,12 @@ const ProductPage = (props) => {
                 <div>
                     <div className={classes.categoryName}>{mainCategory}</div>
                     <div className={classes.productName}>{product}</div>
+                    <Button className={classes.button}>Request A Quote</Button>
                     <div className={classes.descriptionContainer}>
-                        <BlockContent blocks={blocks} className={classes.block} />
+                        <BlockContent
+                            blocks={blocks}
+                            className={classes.block}
+                        />
                     </div>
                 </div>
             </div>

@@ -67,6 +67,7 @@ const Home = () => {
                         <div className={classes.exploreHeaderLine}></div>
                 </div>
                 <Carousel/>
+
             </div>
         </Layout>
     );

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'gatsby'
 import { makeStyles } from '@material-ui/styles'
 import logo from '../images/logo.png'
+import UnderlinableLink from './UnderlinableLink'
 
 const useStyles = makeStyles({
     root: {},
@@ -39,45 +40,6 @@ const useStyles = makeStyles({
     },
 })
 
-const useUnderlinableStyles = makeStyles({
-    line: {
-        background: 'transparent',
-        width: '0%',
-        transitionDuration: '800ms',
-        height: '.2em',
-    },
-    container: {
-        display: 'flex',
-        cursor: 'pointer',
-        padding: '1em',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        '&:hover': {
-            '& > *': {
-                width: 'calc(100% + .8em)',
-                transitionDuration: '.7s',
-                background: '#4D5E6B',
-            },
-        },
-    },
-    link: {
-        textAlign: 'center',
-        color: 'black',
-        background: 'none !important',
-        fontWeight: 400,
-        textDecoration: 'none',
-    },
-})
-const UnderlinableLink = (props) => {
-    const classes = useUnderlinableStyles()
-    return (
-        <div className={classes.container}>
-            <Link {...props} className={classes.link} />
-            <div className={classes.line}></div>
-        </div>
-    )
-}
 
 export default () => {
     const classes = useStyles()
@@ -99,7 +61,6 @@ export default () => {
                     <UnderlinableLink to="/contact-us">
                         Contact Us
                     </UnderlinableLink>
-                    <UnderlinableLink to="/contact-us">EN/FR</UnderlinableLink>
                 </div>
             </div>
         </nav>

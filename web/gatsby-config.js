@@ -27,7 +27,18 @@ module.exports = {
             options: {
                 projectId: "qa4hnhox",
                 dataset: "production",
-                watchMode: true,
+            },
+            defaultImageConfig : {
+                quality : 100,
+                fit : "max",
+                auto : "format"
+            }
+        },
+        {
+            resolve: "gatsby-plugin-sanity-image",
+            options: {
+                projectId: "qa4hnhox",
+                dataset: "production",
             },
         },
         {
