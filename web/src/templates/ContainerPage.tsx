@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import { Link } from "gatsby";
 import { Layout } from "../layout";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { makeStyles } from "@material-ui/styles";
-
+import {Grid} from "@material-ui/core";
 const useStyles = makeStyles({
     imageContainer: (hovered) => ({
         filter: hovered ? "brightness(80%)" : "none",
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
     },
 });
 
-const Product = ({ product, image, categories, slug }) => {
+const Product = ({ product, image, slug }) => {
     const [hovered, setHovered] = useState(false);
     const classes = useStyles(hovered);
     return (
@@ -65,11 +65,6 @@ const Product = ({ product, image, categories, slug }) => {
                 </div>
                 <div>
                     <div className={classes.productName}>{product}</div>
-                    <div>
-                        {categories.map((category) => (
-                            <div className={classes.category}>{category}</div>
-                        ))}
-                    </div>
                 </div>
             </Link>
         </div>
@@ -100,19 +95,32 @@ const useProductsStyles = makeStyles({
         textAlign: "center",
     },
 });
-const Products = (props) => {
-    const { products, category } = props.pageContext;
+
+export const Products = (props) => {
+    const { products, name } = props.pageContext;
     const classes = useProductsStyles();
     return (
         <Layout>
-            <div className={classes.title}> Explore our {category} </div>
+            <div className={classes.title}> Explore our {name} </div>
             <div className={classes.productsContainer}>
-                {products != undefined ? products.map((productData) => (
-                    <Product {...productData} />
-                )) : "Nothing to show here"}
+                {products != undefined ? (
+                    <Grid
+                        container
+                        spacing={10}
+                        style={{ width: "90%", margin: "auto" }}
+                    >
+                        {products.map((productData) => (
+                            <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                                <Product {...productData} />
+                            </Grid>
+                        ))}
+                    </Grid>
+                ) : (
+                    "Nothing to show here"
+                )}
             </div>
         </Layout>
     );
 };
 
-export default Products;
+export default Products

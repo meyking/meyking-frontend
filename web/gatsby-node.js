@@ -27,6 +27,9 @@ graphqlQuery = `
                     Categories {
                         title
                     }
+                    industries {
+                        title
+                    }
                 }
             }
         }
@@ -41,11 +44,22 @@ graphqlQuery = `
                 }
             }
         }
+        allSanityIndustry {
+                    edges {
+                        node {
+                            id
+                            title
+                            slug {
+                                current
+                            }
+                        }
+                    }
+                }
     }
 `;
 
 const path = require("path");
-async function createProductsPage({ data, graphql, actions, reporter }) {
+async function createProductsPage({ data, actions, reporter }) {
     const { createPage } = actions;
     if (data.errors) {
         reporter.panic("Error loading sanity products!", reporter.errors);
@@ -54,7 +68,7 @@ async function createProductsPage({ data, graphql, actions, reporter }) {
     const productTemplate = path.resolve(`src/templates/ProductPage.tsx`);
 
     nodes.forEach(({ node }) => {
-        console.log(node);
+        console.log(node)
         const slug = node.slug.current;
         console.log(`creating slug for ${slug}`);
         createPage({
@@ -68,51 +82,69 @@ async function createProductsPage({ data, graphql, actions, reporter }) {
     });
 }
 
-async function createCategoryPage({ data, actions, reporter }) {
-    const { createPage } = actions;
-    if (data.errors) {
-        reporter.panic("Error loading Sanity categories!", reporter.errors);
-    }
-    const nodes = data.data.allSanityCategory.edges;
-    const categoryTemplate = path.resolve(`src/templates/CategoryPage.tsx`);
-    const categoryMap = {}
-    const addProduct = (category,info) => {
-        if (category in categoryMap){
-            categoryMap[category].push(info)
+const createTagPages = (tagNodes, productNodes, name, tagKey,createPage) => {
+    const tagTemplate = path.resolve(`src/templates/ContainerPage.tsx`);
+    const tagMap = {};
+    const addProduct = (tag, info) => {
+        if (tag in tagMap) {
+            tagMap[tag].push(info);
         } else {
-            categoryMap[category] = [info]
+            tagMap[tag] = [info];
         }
-    }
-    const processedProducts = data.data.allSanityProduct.edges.map(({ node }) => {
+    };
+    console.log("creating tagPages with ",name)
+    productNodes.map(({ node }) => {
         const { product } = node;
         const image = node.thumbnail.asset.gatsbyImageData;
-        const categories = node.Categories.map((category) => category.title);
+        console.log(node)
+        const tags = node[tagKey].map((tag) => tag.title);
         const slug = node.slug.current;
-        const info = { product, image, categories, slug }
-        for (const category of categories){
-            addProduct(category,info)
+        const info = { product, image, slug };
+        for (const tag of tags) {
+            addProduct(tag, info);
         }
         return info;
     });
 
-    nodes.forEach(({ node }) => {
+    tagNodes.forEach(({ node }) => {
         console.log(node);
         const slug = node.slug.current;
-        const {title} = node
-        console.log(`creating slug for category/${slug}`);
+        const { title } = node;
+        console.log(`creating slug for ${name}/${slug}`);
         createPage({
-            path: `/category/${slug}`,
-            component: categoryTemplate,
+            path: `/${name}/${slug}`,
+            component: tagTemplate,
             context: {
-                category: title,
-                products : categoryMap[title]
+                name: title,
+                products: tagMap[title],
             },
         });
     });
+};
+async function createAllTagsPages({ data, actions, reporter }) {
+    const { createPage } = actions;
+    if (data.errors) {
+        reporter.panic("Error loading Sanity categories!", reporter.errors);
+    }
+    const productNodes = data.data.allSanityProduct.edges;
+    createTagPages(
+        data.data.allSanityCategory.edges,
+        productNodes,
+        "category",
+        "Categories",
+        createPage
+    );
+    createTagPages(
+        data.data.allSanityIndustry.edges,
+        productNodes,
+        "industry",
+        "industries",
+        createPage
+    );
 }
 // You can delete this file if you're not using it
 exports.createPages = async ({ graphql, actions, reporter }) => {
     const data = await graphql(graphqlQuery);
     await createProductsPage({ data, actions, reporter });
-    await createCategoryPage({ data, actions, reporter });
+    await createAllTagsPages({ data, actions, reporter });
 };
