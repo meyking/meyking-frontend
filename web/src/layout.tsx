@@ -1,5 +1,6 @@
 import React from "react"
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer"
 import './index.css'
 
 const Main = ({ children }) => {
@@ -8,9 +9,10 @@ const Main = ({ children }) => {
 
 export const Layout = ({ children }) => {
   return (
-    <div>
+    <div >
       <Navbar />
       <Main>{children}</Main>
+      <Footer></Footer>
     </div>
   );
 };

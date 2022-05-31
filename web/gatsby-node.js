@@ -5,7 +5,7 @@
  */
 graphqlQuery = `
     query MyQuery {
-        allSanityProduct {
+        allSanityProduct(sort : {order : ASC, fields : product}) {
             edges {
                 node {
                     id
@@ -33,7 +33,7 @@ graphqlQuery = `
                 }
             }
         }
-        allSanityCategory {
+        allSanityCategory(sort : {order : ASC, fields : title}){
             edges {
                 node {
                     id
@@ -44,7 +44,7 @@ graphqlQuery = `
                 }
             }
         }
-        allSanityIndustry {
+        allSanityIndustry(sort : {order : ASC, fields : title}) {
                     edges {
                         node {
                             id
@@ -66,9 +66,14 @@ async function createProductsPage({ data, actions, reporter }) {
     }
     const nodes = data.data.allSanityProduct.edges;
     const productTemplate = path.resolve(`src/templates/ProductPage.tsx`);
-
     nodes.forEach(({ node }) => {
-        console.log(node)
+        if (node.slug === null){
+            console.log(node)
+
+        }
+    });
+    nodes.forEach(({ node }) => {
+        console.log(node);
         const slug = node.slug.current;
         console.log(`creating slug for ${slug}`);
         createPage({
@@ -82,7 +87,7 @@ async function createProductsPage({ data, actions, reporter }) {
     });
 }
 
-const createTagPages = (tagNodes, productNodes, name, tagKey,createPage) => {
+const createTagPages = (tagNodes, productNodes, name, tagKey, createPage) => {
     const tagTemplate = path.resolve(`src/templates/ContainerPage.tsx`);
     const tagMap = {};
     const addProduct = (tag, info) => {
@@ -92,11 +97,11 @@ const createTagPages = (tagNodes, productNodes, name, tagKey,createPage) => {
             tagMap[tag] = [info];
         }
     };
-    console.log("creating tagPages with ",name)
+    console.log("creating tagPages with ", name);
     productNodes.map(({ node }) => {
         const { product } = node;
         const image = node.thumbnail.asset.gatsbyImageData;
-        console.log(node)
+        console.log(node);
         const tags = node[tagKey].map((tag) => tag.title);
         const slug = node.slug.current;
         const info = { product, image, slug };

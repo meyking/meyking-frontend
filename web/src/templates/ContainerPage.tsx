@@ -10,7 +10,7 @@ const useStyles = makeStyles({
         transitionDuration: "300ms",
     }),
     productName: {
-        fontSize: "0.9em",
+        fontSize: "1.5em",
     },
     category: {
         fontSize: "0.7em",

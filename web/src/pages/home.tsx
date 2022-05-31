@@ -9,10 +9,10 @@ import Carousel from "../components/Carousel"
 const useStyles = makeStyles({
     exploreContainer: {
         marginTop: "2rem",
-        marginLeft: "auto",
-        marginRight: "auto",
+        marginLeft : "auto",
+        marginRight : "auto",
         width: "95%",
-        minWidth: "300px",
+        // minWidth: "800px",
     },
     exploreHeader: {
         width: "50%",
@@ -62,12 +62,11 @@ const Home = () => {
                 <div className={classes.exploreHeaderContainer}>
                         <div className={classes.exploreHeaderLine}></div>
                         <h1 className={classes.exploreHeader}>
-                            Explore our products
+                            our products
                         </h1>
                         <div className={classes.exploreHeaderLine}></div>
                 </div>
                 <Carousel/>
-
             </div>
         </Layout>
     );

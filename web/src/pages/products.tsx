@@ -53,7 +53,7 @@ const useStyles = makeStyles({
         transitionDuration: "300ms",
     }),
     productName: {
-        fontSize: "0.9em",
+        fontSize: "1.5em",
     },
     category: {
         fontSize: "0.7em",
@@ -94,8 +94,9 @@ const Tag = ({ category, image, slug,baseUrl }) => {
                             <div
                                 className={classes.viewProduct}
                                 onMouseEnter={() => setHovered(true)}
+                                onMouseLeave={() => setHovered(false)}
                             >
-                                Explore {category}
+                                Explore our {category} Section
                             </div>
                         )}
                         <GatsbyImage

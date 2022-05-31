@@ -10,6 +10,7 @@ const useUnderlinableStyles = makeStyles({
     },
     container: {
         display: "flex",
+        fontSize : "1.2em",
         cursor: "pointer",
         padding: "1em",
         flexDirection: "column",

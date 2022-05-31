@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "gatsby";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import logo from "../images/logo.png";
+import logo from "../images/logo_cn.jpg";
 import MenuIcon from "@material-ui/icons/Menu";
 import UnderlinableLink from "./UnderlinableLink";
 import {
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
         padding: "1.2em",
         display: "flex",
         alignItems: "center",
-        justifyContent : "space-between"
+        justifyContent: "space-between",
     },
     linkContainer: {
         display: "flex",
@@ -61,6 +61,7 @@ const useStyles = makeStyles({
         padding: "0em 0.5em",
         color: "black",
         textDecoration: "none",
+        fontFamily: "Montserrat",
         "&:hover": {
             textDecoration: "underline",
         },
@@ -81,13 +82,15 @@ const LinksList = ({ links, linksHref, opened }) => {
                 {links.map((link: string, i: number) => (
                     <div style={{ width: "95%", margin: "auto" }}>
                         <ListItem key={link}>
-                            <a
-                                className={classes.link}
-                                href={linksHref[i]}
-                                style={{ textAlign: "center" }}
-                            >
-                                <ListItemText>{link}</ListItemText>
-                            </a>
+                            <ListItemText>
+                                <Link
+                                    className={classes.link}
+                                    href={linksHref[i]}
+                                    style={{ textAlign: "center" }}
+                                >
+                                    {link}
+                                </Link>
+                            </ListItemText>
                         </ListItem>
                     </div>
                 ))}
@@ -100,14 +103,8 @@ export default () => {
     const classes = useStyles();
     const theme = useTheme();
     const [opened, setOpened] = useState(false);
-    const links = ["Home", "Our Products", "About Us", "Contact Us", "Gallery"];
-    const linksHref = [
-        "/home",
-        "/products",
-        "/about-us",
-        "/contact-us",
-        "/gallery",
-    ];
+    const links = ["Home", "Our Products", "About Us", "Contact Us"];
+    const linksHref = ["/home", "/products", "/about-us", "/contact-us"];
     const DesktopLink = (
         <div className={classes.linkContainer}>
             {links.map((link, index) => (

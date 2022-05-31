@@ -7,7 +7,7 @@ import { StaticImage } from "gatsby-plugin-image";
 
 const useStyles = makeStyles({
     root: {
-        background: "#EEF4F6",
+        background: "rgb(238,244,246)",
         padding: "5%",
     },
     bannerSlide: {
@@ -83,7 +83,7 @@ const useStyles = makeStyles({
 //`
 const SimpleSlider = ({hideAboutUs}) => {
     const classes = useStyles();
-    const matches = useMediaQuery("(min-width:600px)");
+    const matches = useMediaQuery("(min-width:800px)");
     return (
         <div className={classes.root}>
             <div className={classes.hero}>
@@ -104,7 +104,7 @@ const SimpleSlider = ({hideAboutUs}) => {
                                 </div>
                                 {!hideAboutUs && 
                                 <button className={classes.bannerShopNow}>
-                                    <Link to="/about-us">ABOUT US</Link>
+                                    <Link to="/products">EXPLORE OUR PRODUCTS</Link>
                                 </button>}
                             </div>
                         </div>
@@ -114,7 +114,9 @@ const SimpleSlider = ({hideAboutUs}) => {
                     {matches && (
                         <StaticImage
                             src="../images/hero-image.png"
+                            placeholder="tracedSVG"
                             alt="Box with Laces"
+                            loading="eager"
                             className={classes.lace}
                         />
                     )}

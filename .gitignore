@@ -168,3 +168,6 @@ tags
 [._]*.un~
 
 # End of https://www.toptal.com/developers/gitignore/api/node,react,code,vim
+
+# Local Netlify folder
+.netlify

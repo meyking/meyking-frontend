@@ -14,7 +14,9 @@ const query = graphql`
                     id
                     title
                     thumbnail {
-                        ...ImageWithPreview
+                        asset {
+                            gatsbyImageData(aspectRatio : 1,fit: CROP, placeholder: NONE)
+                        }
                     }
                     product {
                         id
@@ -42,8 +44,7 @@ const useStyles = makeStyles({
 
     },
     carousel: {
-        maxHeight : "30vh",
-        maxWidth : "80%",
+        maxWidth : "95%",
         margin : "auto"
     },
     gatsbyImage: {
@@ -63,9 +64,10 @@ const useStyles = makeStyles({
         width: "100%",
     },
     carouselItemContainer : {
-        display : "flex",
-        height : "100%",
-        maxWidth : "500px"
+        // display : "flex",
+        // height : "100%",
+        maxWidth : "500px",
+        margin : "auto",
     }
 });
 
@@ -82,9 +84,10 @@ export default () => {
                     className={classes.link}
                 >
                     <div className={classes.slideEl}>
-                        <SanityImage
-                            {...node.thumbnail}
+                        <GatsbyImage
+                            image={node.thumbnail.asset.gatsbyImageData}
                             className={classes.gatsbyImage}
+                            loading="eager"
                             alt={node.title}
                             style={{
                                 width : "100%",
@@ -100,11 +103,11 @@ export default () => {
     });
     const responsiveLayout = [
         {
-            breakpoint: 500,
+            breakpoint: 800,
             cols: 1,
         },
         {
-            breakpoint: 800,
+            breakpoint: 1200,
             cols: 2,
         },
     ];
@@ -112,7 +115,7 @@ export default () => {
         <div className={classes.carousel}>
             <Carousel
                 cols={3}
-                gap={10}
+                gap={5}
                 row={1}
                 loop
                 autoplay={6000}

@@ -19,7 +19,18 @@ module.exports = {
                 icon: "src/images/logo.png",
             },
         },
-        "gatsby-plugin-sharp",
+        {
+            resolve: "gatsby-plugin-sharp",
+            options: {
+                defaults: {
+                    formats: ['auto'],
+                    placeholder: 'blurred',
+                    quality: 100,
+                    breakpoints: [640, 800, 1200, 1920]
+                },
+
+            }
+        },
         "gatsby-transformer-sharp",
         "gatsby-plugin-typescript",
         {
@@ -28,11 +39,6 @@ module.exports = {
                 projectId: "qa4hnhox",
                 dataset: "production",
             },
-            defaultImageConfig : {
-                quality : 100,
-                fit : "max",
-                auto : "format"
-            }
         },
         {
             resolve: "gatsby-plugin-sanity-image",
@@ -40,6 +46,12 @@ module.exports = {
                 projectId: "qa4hnhox",
                 dataset: "production",
             },
+            defaultImageConfig: {
+                quality: 100,
+                fit: "max",
+                auto: "format",
+                dpr: 3,
+            }
         },
         {
             resolve: "gatsby-source-filesystem",
