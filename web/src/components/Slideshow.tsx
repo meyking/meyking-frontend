@@ -27,6 +27,9 @@ const useStyles = makeStyles({
         padding: 10,
         fontFamily : "Poppins",
         fontSize : "1.2rem",
+        '@media (max-width: 520px)' : {
+            fontSize : "0.85rem"
+        },
         border: "none",
         paddingLeft: 20,
         paddingRight: 20,
@@ -46,6 +49,9 @@ const useStyles = makeStyles({
         fontSize: "3rem",
         lineHeight : "1",
         fontWeight: 500,
+        '@media (max-width: 520px)' : {
+            fontSize : "1.5rem"
+        },
     },
     hero: {
         display: "flex",
@@ -75,6 +81,11 @@ const useStyles = makeStyles({
             background: "#3FC8F4",
         },
     },
+    bannerDescription : {
+        '@media (max-width: 520px)' : {
+            fontSize : "0.9rem"
+        },
+    }
 });
 //const sliderQuery = graphql`
 //query Image {
@@ -98,7 +109,7 @@ const SimpleSlider = ({hideAboutUs}) => {
                                 <h1 className={classes.bannerTitle}>
                                     MEYKING ENTREPRISE
                                 </h1>
-                                <div>
+                                <div className={classes.bannerDescription}>
                                     Your one-stop destination for custom
                                     packaging
                                 </div>
