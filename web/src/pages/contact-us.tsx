@@ -52,7 +52,18 @@ const useStyles = makeStyles({
         },
     },
 });
-
+function getSubjectValue(location) {
+    try {
+        const prodName = location.state.product;
+        if (prodName === undefined) {
+            return "";
+        } else {
+            return "Quote for " + prodName;
+        }
+    } catch (e) {
+        return "";
+    }
+}
 const ContactUs = ({location}) => {
     const classes = useStyles();
     const [status, setStatus] = useState(0);
@@ -137,7 +148,7 @@ const ContactUs = ({location}) => {
                         label="Subject"
                         variant="outlined"
                         className={classes.padded}
-                        defaultValue={location.state != null && "Quote for " + location.state.product || ""}
+                        defaultValue={getSubjectValue(location)}
                         fullWidth
                     />
                 </div>
