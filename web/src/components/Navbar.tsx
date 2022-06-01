@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "gatsby";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import logo from "../images/logo_cn.jpg";
+import banner from "../images/banner_cn.jpg";
+import addOn from "../images/add_on_cn.jpg";
 import MenuIcon from "@material-ui/icons/Menu";
 import UnderlinableLink from "./UnderlinableLink";
 import {
@@ -16,7 +18,10 @@ import {
 const useStyles = makeStyles({
     root: {},
     navContainer: {
-        padding: "1.2em",
+        paddingTop: "1.2em",
+        paddingBottom : "1.2em",
+        paddingLeft : "0.8em",
+        paddingRight : "0.8em",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -26,19 +31,19 @@ const useStyles = makeStyles({
         alignItems: "center",
         textTransform: "uppercase",
         "& > * ": {
-            marginLeft: "3rem",
+            fontSize : "2vmin",
             color: "black",
             textDecoration: "none",
         },
     },
     logo: {
-        height: "4em",
-        width: "4em",
+        height: "3em",
+        width: "3em",
         display: "block",
         flexBasis: 1,
     },
     logoText: {
-        fontSize: "1em",
+        fontSize: "0.9em",
         fontFamily: "Montserrat",
         fontWeight: 600,
     },
@@ -103,7 +108,7 @@ export default () => {
     const classes = useStyles();
     const theme = useTheme();
     const [opened, setOpened] = useState(false);
-    const links = ["Home", "Our Products", "About Us", "Contact Us"];
+    const links = ["Home", "Products", "About", "Contact"];
     const linksHref = ["/home", "/products", "/about-us", "/contact-us"];
     const DesktopLink = (
         <div className={classes.linkContainer}>
@@ -121,9 +126,23 @@ export default () => {
     return (
         <nav className={classes.root}>
             <div className={classes.navContainer}>
-                <div className={classes.logoContainer}>
-                    <img src={logo} className={classes.logo} />
-                    <span className={classes.logoText}>MEYKING</span>
+                <div style={{width : "100%", flexDirection : "row", display : "flex", alignItems : "baseline"}}>
+                    <div className={classes.logoContainer} >
+                        <img src={logo} className={classes.logo} />
+                        <span className={classes.logoText}>MEYKING</span>
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            marginLeft: "1rem",
+                            minWidth : "200px",
+                            maxWidth : "300px",
+                        }}
+                    >
+                        <img src={banner} style={{ width: "100%" }} />
+                        <img src={addOn} style={{ width: "90%" }} />
+                    </div>
                 </div>
                 {matches ? (
                     <Button onClick={toggleDrawer}>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
-import Alert from "@material-ui/lab/Alert"
+import Alert from "@material-ui/lab/Alert";
 import { Layout } from "../layout";
 import SimpleSlider from "../components/Slideshow";
 import { makeStyles } from "@material-ui/styles";
@@ -53,18 +53,30 @@ const useStyles = makeStyles({
     },
 });
 
-const ContactUs = ({location}) => {
+function getSubjectValue(location) {
+    try {
+        const prodName = location.state.product;
+        if (prodName === undefined) {
+            return "";
+        } else {
+            return "Quote for " + prodName;
+        }
+    } catch (e) {
+        return "";
+    }
+}
+const ContactUs = ({ location }) => {
     const classes = useStyles();
     const [status, setStatus] = useState(0);
-    const [invalid,setInvalid] = useState(false)
+    const [invalid, setInvalid] = useState(false);
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        setInvalid(!e.currentTarget.checkValidity())
+        e.preventDefault();
+        setInvalid(!e.currentTarget.checkValidity());
         setTimeout(() => {
-            setInvalid(false)
-        },3000)
-        if (!e.currentTarget.checkValidity()){
-            return
+            setInvalid(false);
+        }, 3000);
+        if (!e.currentTarget.checkValidity()) {
+            return;
         }
         const data = new FormData(e.currentTarget);
         const jsonObject = Object.fromEntries(data.entries());
@@ -77,9 +89,10 @@ const ContactUs = ({location}) => {
         });
         setStatus(resp.ok ? 1 : -1);
         setTimeout(() => {
-            setStatus(0)
-        },4000)
+            setStatus(0);
+        }, 4000);
     };
+    const defaultSubjectValue = getSubjectValue(location);
     return (
         <div className={classes.container}>
             <div className={classes.header}> Contact Us </div>
@@ -137,7 +150,7 @@ const ContactUs = ({location}) => {
                         label="Subject"
                         variant="outlined"
                         className={classes.padded}
-                        defaultValue={location.state != null && "Quote for " + location.state.product || ""}
+                        defaultValue={defaultSubjectValue}
                         fullWidth
                     />
                 </div>
@@ -155,10 +168,11 @@ const ContactUs = ({location}) => {
                     SUBMIT
                 </button>
             </form>
-            <br/>
+            <br />
             {invalid && (
                 <Alert severity="warning">
-                    Please make sure to fill out all required fields. Make sure to provide a valid email as well.
+                    Please make sure to fill out all required fields. Make sure
+                    to provide a valid email as well.
                 </Alert>
             )}
             {status == 1 && (
@@ -202,26 +216,22 @@ const CustomerServiceInfo = () => {
         >
             <div className={classes.header}> Customer Service </div>
             <p className={classes.text}>
-                Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (514) 731-8868 <br />
-                Fax:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(514)
-                731-8838 <br />
-                Toll Free: 1-877-639-5460 <br />
+                Phone: (020) 3868-9331 <br />
+                Fax:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(020)
+                3868-9335
+                <br />
                 Email: info@meyking.com
             </p>
             <div className={classes.subHeader}>Head Office</div>
             <p className={classes.text}>
-                5475, rue Paré, suite 228
-                <br /> Mont-Royal, Québec, H4P 1P7, Canada
-            </p>
-            <p className={classes.text}>
-                Click <a href="https://goo.gl/maps/BFiMvii8yGjmeE5n7">here</a>{" "}
-                to find us on Google Maps
+                T Land Park, Unit 8019, 8F, 3 Ling Shan Dong Road, TianHe Dist
+                <br /> Guangzhou, Guangdong, China, 510665
             </p>
         </div>
     );
 };
 
-const ContactUsPage = ({location}) => {
+const ContactUsPage = ({ location }) => {
     //name
     //phone number
     //email <address>
@@ -238,7 +248,7 @@ const ContactUsPage = ({location}) => {
                     <CustomerServiceInfo />
                 </Grid>
                 <Grid item sm={12} md={8}>
-                    <ContactUs location={location}/>
+                    <ContactUs location={location} />
                 </Grid>
             </Grid>
         </Layout>
