@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "gatsby";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import logo from "../images/logo_cn.jpg";
+import logo from "../images/logo.png";
 import MenuIcon from "@material-ui/icons/Menu";
 import UnderlinableLink from "./UnderlinableLink";
 import {
