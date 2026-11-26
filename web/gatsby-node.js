@@ -59,12 +59,24 @@ graphqlQuery = `
 `;
 
 const path = require("path");
+// A product with no thumbnail in Sanity uses its first gallery image instead.
+// A product with no images at all is treated as unpublished: it gets no
+// product page and is left off the category and industry pages.
+const publishedProducts = (data) =>
+    data.data.allSanityProduct.edges
+        .map(({ node }) => {
+            const thumbnail = node.thumbnail?.asset
+                ? node.thumbnail
+                : (node.images || []).find((image) => image?.asset);
+            return { node: { ...node, thumbnail } };
+        })
+        .filter(({ node }) => node.thumbnail);
 async function createProductsPage({ data, actions, reporter }) {
     const { createPage } = actions;
     if (data.errors) {
         reporter.panic("Error loading sanity products!", reporter.errors);
     }
-    const nodes = data.data.allSanityProduct.edges;
+    const nodes = publishedProducts(data);
     const productTemplate = path.resolve(`src/templates/ProductPage.tsx`);
     nodes.forEach(({ node }) => {
         if (node.slug === null){
@@ -131,7 +143,7 @@ async function createAllTagsPages({ data, actions, reporter }) {
     if (data.errors) {
         reporter.panic("Error loading Sanity categories!", reporter.errors);
     }
-    const productNodes = data.data.allSanityProduct.edges;
+    const productNodes = publishedProducts(data);
     createTagPages(
         data.data.allSanityCategory.edges,
         productNodes,

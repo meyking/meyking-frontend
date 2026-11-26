@@ -163,7 +163,11 @@ const Products = () => {
     const classes = useProductsStyles();
     const [groupMode, setGroupMode] = useState(0);
     const data = useStaticQuery(query);
-    let processed = data[modes[groupMode]].edges.map(({ node }) => {
+    // Categories and industries with no image in Sanity get no tile.
+    const withImage = data[modes[groupMode]].edges.filter(
+        ({ node }) => node.thumbnail?.asset
+    );
+    let processed = withImage.map(({ node }) => {
         const { title: category } = node;
         const image = node.thumbnail.asset.gatsbyImageData;
         const slug = node.slug.current;

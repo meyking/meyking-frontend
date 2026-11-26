@@ -74,7 +74,11 @@ const useStyles = makeStyles({
 export default () => {
     const classes = useStyles();
     const data = useStaticQuery(query);
-    const images = data.allSanityCarousel.edges.map(({ node }, index) => {
+    // Slides with no image in Sanity are left out of the carousel.
+    const slides = data.allSanityCarousel.edges.filter(
+        ({ node }) => node.thumbnail?.asset
+    );
+    const images = slides.map(({ node }, index) => {
         return (
             <Carousel.Item key={index}>
                 <div className={classes.carouselItemContainer}>
