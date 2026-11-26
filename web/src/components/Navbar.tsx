@@ -1,141 +1,149 @@
 import React, { useState } from "react";
 import { Link } from "gatsby";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import logo from "../images/logo.png";
+import { StaticImage } from "gatsby-plugin-image";
+import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
-import UnderlinableLink from "./UnderlinableLink";
-import {
-    Button,
-    Divider,
-    List,
-    ListItem,
-    ListItemText,
-    useMediaQuery,
-} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import ButtonLink from "./ButtonLink";
+import { colors, container, fontFamily } from "../theme";
+
+const MOBILE = "@media (max-width: 860px)";
 
 const useStyles = makeStyles({
-    root: {},
-    navContainer: {
-        padding: "1.2em",
+    root: {
+        position: "sticky",
+        top: 0,
+        zIndex: 1100,
+        background: "rgba(255,255,255,0.92)",
+        backdropFilter: "saturate(180%) blur(12px)",
+        borderBottom: `1px solid ${colors.line}`,
+        fontFamily,
+    },
+    bar: {
+        ...container,
+        height: 72,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
     },
-    linkContainer: {
+    brand: {
         display: "flex",
         alignItems: "center",
-        textTransform: "uppercase",
-        "& > * ": {
-            marginLeft: "3rem",
-            color: "black",
-            textDecoration: "none",
-        },
+        gap: 10,
+        textDecoration: "none",
+        color: colors.ink,
+        fontWeight: 700,
+        fontSize: "1.05rem",
+        letterSpacing: "0.14em",
     },
     logo: {
-        height: "4em",
-        width: "4em",
-        display: "block",
-        flexBasis: 1,
+        width: 40,
+        flexShrink: 0,
     },
-    logoText: {
-        fontSize: "1em",
-        fontFamily: "Montserrat",
-        fontWeight: 600,
-    },
-    logoContainer: {
+    links: {
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
-    },
-    drawer: {
-        maxHeight: "0vh",
-        overflow: "hidden",
-        transition: "max-height 0.2s ease-out",
-        "&.slide": {
-            maxHeight: "100vh",
-            transition: "max-height 0.5s ease-in",
-        },
+        gap: 32,
+        [MOBILE]: { display: "none" },
     },
     link: {
-        padding: "0em 0.5em",
-        color: "black",
+        color: colors.ink,
         textDecoration: "none",
-        fontFamily: "Montserrat",
-        "&:hover": {
-            textDecoration: "underline",
+        fontSize: "0.95rem",
+        fontWeight: 500,
+        "&:hover": { color: colors.brand },
+    },
+    activeLink: {
+        color: colors.brand,
+    },
+    menuButton: {
+        display: "none",
+        background: "none",
+        border: "none",
+        padding: 8,
+        margin: -8,
+        color: colors.ink,
+        cursor: "pointer",
+        [MOBILE]: { display: "flex" },
+    },
+    drawer: {
+        display: "none",
+        [MOBILE]: {
+            display: "flex",
+            flexDirection: "column",
+            padding: "8px 24px 24px",
+            borderTop: `1px solid ${colors.line}`,
+            background: colors.white,
         },
+    },
+    drawerLink: {
+        padding: "14px 0",
+        borderBottom: `1px solid ${colors.line}`,
+        marginBottom: 0,
+        "&:last-of-type": { marginBottom: 20 },
     },
 });
 
-const LinksList = ({ links, linksHref, opened }) => {
-    const theme = useTheme();
-    const classes = useStyles(theme);
-    return (
-        <div
-            className={
-                opened ? [classes.drawer, "slide"].join(" ") : classes.drawer
-            }
-        >
-            <Divider />
-            <List>
-                {links.map((link: string, i: number) => (
-                    <div style={{ width: "95%", margin: "auto" }}>
-                        <ListItem key={link}>
-                            <ListItemText>
-                                <Link
-                                    className={classes.link}
-                                    href={linksHref[i]}
-                                    style={{ textAlign: "center" }}
-                                >
-                                    {link}
-                                </Link>
-                            </ListItemText>
-                        </ListItem>
-                    </div>
-                ))}
-            </List>
-            <Divider />
-        </div>
-    );
-};
-export default () => {
+const links = [
+    { label: "Home", to: "/" },
+    { label: "Products", to: "/products" },
+    { label: "About", to: "/about-us" },
+    { label: "Contact", to: "/contact-us" },
+];
+
+const Navbar = () => {
     const classes = useStyles();
-    const theme = useTheme();
     const [opened, setOpened] = useState(false);
-    const links = ["Home", "Our Products", "About Us", "Contact Us"];
-    const linksHref = ["/home", "/products", "/about-us", "/contact-us"];
-    const DesktopLink = (
-        <div className={classes.linkContainer}>
-            {links.map((link, index) => (
-                <UnderlinableLink to={linksHref[index]}>
-                    {link}
-                </UnderlinableLink>
-            ))}
-        </div>
-    );
-    const toggleDrawer = () => {
-        setOpened((op) => !op);
-    };
-    const matches = useMediaQuery(theme.breakpoints.down("sm"));
+    const navLinks = (extraClass: string) =>
+        links.map(({ label, to }) => (
+            <Link
+                key={to}
+                to={to}
+                className={`${classes.link} ${extraClass}`}
+                activeClassName={classes.activeLink}
+            >
+                {label}
+            </Link>
+        ));
     return (
         <nav className={classes.root}>
-            <div className={classes.navContainer}>
-                <div className={classes.logoContainer}>
-                    <img src={logo} className={classes.logo} />
-                    <span className={classes.logoText}>MEYKING</span>
+            <div className={classes.bar}>
+                <Link to="/" className={classes.brand}>
+                    <StaticImage
+                        src="../images/logo.png"
+                        alt=""
+                        width={40}
+                        placeholder="none"
+                        loading="eager"
+                        className={classes.logo}
+                    />
+                    MEYKING
+                </Link>
+                <div className={classes.links}>
+                    {navLinks("")}
+                    <ButtonLink to="/contact-us" variant="primary">
+                        Request a quote
+                    </ButtonLink>
                 </div>
-                {matches ? (
-                    <Button onClick={toggleDrawer}>
-                        <MenuIcon
-                            style={{ height: "1.5em", width: "1.5em" }}
-                        ></MenuIcon>
-                    </Button>
-                ) : (
-                    DesktopLink
-                )}
+                <button
+                    className={classes.menuButton}
+                    onClick={() => setOpened((isOpen) => !isOpen)}
+                    aria-label={opened ? "Close menu" : "Open menu"}
+                    aria-expanded={opened}
+                >
+                    {opened ? <CloseIcon /> : <MenuIcon />}
+                </button>
             </div>
-            {matches && <LinksList {...{ links, linksHref, opened }} />}
+            {opened && (
+                <div className={classes.drawer}>
+                    {navLinks(classes.drawerLink)}
+                    <ButtonLink to="/contact-us" variant="primary">
+                        Request a quote
+                    </ButtonLink>
+                </div>
+            )}
         </nav>
     );
 };
+
+export default Navbar;

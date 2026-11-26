@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { graphql, useStaticQuery, Link } from "gatsby";
+import { Link } from "gatsby";
+import { useProductGroups } from "../hooks/useProductGroups";
 import { Layout } from "../layout";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { makeStyles } from "@material-ui/styles";
@@ -11,41 +12,6 @@ import {
     NativeSelect,
     Select,
 } from "@material-ui/core";
-
-const query = graphql`
-    query MyQuery {
-        allSanityCategory(sort: { order: ASC, fields: title }) {
-            edges {
-                node {
-                    title
-                    slug {
-                        current
-                    }
-                    thumbnail {
-                        asset {
-                            gatsbyImageData(aspectRatio: 1, fit: CROP)
-                        }
-                    }
-                }
-            }
-        }
-        allSanityIndustry(sort: { order: ASC, fields: title }) {
-            edges {
-                node {
-                    title
-                    slug {
-                        current
-                    }
-                    thumbnail {
-                        asset {
-                            gatsbyImageData(aspectRatio: 1, fit: CROP)
-                        }
-                    }
-                }
-            }
-        }
-    }
-`;
 
 const useStyles = makeStyles({
     imageContainer: (hovered) => ({
@@ -158,26 +124,17 @@ const useProductsStyles = makeStyles({
         border: "none",
     },
 });
-const modes = ["allSanityCategory", "allSanityIndustry"];
 const Products = () => {
     const classes = useProductsStyles();
     const [groupMode, setGroupMode] = useState(0);
-    const data = useStaticQuery(query);
-    // Categories and industries with no image in Sanity get no tile.
-    const withImage = data[modes[groupMode]].edges.filter(
-        ({ node }) => node.thumbnail?.asset
+    const { categories, industries } = useProductGroups();
+    const processed = (groupMode === 0 ? categories : industries).map(
+        ({ title, image, slug }) => ({ category: title, image, slug })
     );
-    let processed = withImage.map(({ node }) => {
-        const { title: category } = node;
-        const image = node.thumbnail.asset.gatsbyImageData;
-        const slug = node.slug.current;
-        return { category, image, slug };
-    });
 
     const handleChange = (event) => {
         const value = event.target.value;
         setGroupMode(parseInt(value));
-        console.log(modes[groupMode]);
     };
     return (
         <Layout>
