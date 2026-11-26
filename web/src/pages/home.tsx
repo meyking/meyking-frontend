@@ -6,6 +6,7 @@ import { Layout } from "../layout";
 import ButtonLink from "../components/ButtonLink";
 import CategoryGrid from "../components/CategoryGrid";
 import FeaturedProducts from "../components/FeaturedProducts";
+import Section from "../components/Section";
 import {
     colors,
     contact,
@@ -56,27 +57,6 @@ const useStyles = makeStyles({
         display: "flex",
         flexWrap: "wrap",
         gap: 12,
-    },
-    section: {
-        ...container,
-        paddingTop: 48,
-        marginTop: 16,
-    },
-    sectionHeader: {
-        display: "flex",
-        alignItems: "baseline",
-        justifyContent: "space-between",
-        flexWrap: "wrap",
-        gap: 16,
-        paddingTop: 24,
-        marginBottom: 24,
-        borderTop: `1px solid ${colors.ink}`,
-    },
-    sectionTitle: {
-        margin: 0,
-        fontFamily: headingFamily,
-        fontSize: "1.75rem",
-        fontWeight: 500,
     },
     textLink: {
         color: colors.brand,
@@ -131,26 +111,15 @@ const Home = () => {
                     />
                 </section>
 
-                <section className={classes.section}>
-                    <div className={classes.sectionHeader}>
-                        <h2 className={classes.sectionTitle}>Categories</h2>
-                    </div>
+                <Section title="Categories">
                     <CategoryGrid />
-                </section>
+                </Section>
 
-                <section className={classes.section}>
-                    <div className={classes.sectionHeader}>
-                        <h2 className={classes.sectionTitle}>
-                            Featured products
-                        </h2>
-                    </div>
+                <Section title="Featured products">
                     <FeaturedProducts />
-                </section>
+                </Section>
 
-                <section className={classes.section}>
-                    <div className={classes.sectionHeader}>
-                        <h2 className={classes.sectionTitle}>Quotes</h2>
-                    </div>
+                <Section title="Quotes">
                     <div className={classes.quote}>
                         <p className={classes.quoteText}>
                             Call{" "}
@@ -175,7 +144,7 @@ const Home = () => {
                             </ButtonLink>
                         </div>
                     </div>
-                </section>
+                </Section>
             </div>
         </Layout>
     );

@@ -23,7 +23,9 @@ export const container = {
 export const contact = {
     phone: "(514) 731-8868",
     phoneHref: "tel:+15147318868",
+    fax: "(514) 731-8838",
     email: "info@meyking.com",
+    mapUrl: "https://goo.gl/maps/BFiMvii8yGjmeE5n7",
     addressLines: [
         "5475, rue Paré, suite 228",
         "Mont-Royal, Québec, H4P 1P7, Canada",
