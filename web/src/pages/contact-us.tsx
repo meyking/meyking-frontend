@@ -216,7 +216,6 @@ const CustomerServiceInfo = () => {
                 Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (514) 731-8868 <br />
                 Fax:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(514)
                 731-8838 <br />
-                Toll Free: 1-877-639-5460 <br />
                 Email: info@meyking.com
             </p>
             <div className={classes.subHeader}>Head Office</div>
