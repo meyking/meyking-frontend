@@ -4,13 +4,13 @@ export const colors = {
     muted: "#5B6B79",
     brand: "#0065B3",
     brandDark: "#00518F",
-    accent: "#3FC8F4",
     surface: "#F3F7FA",
     line: "#E2E8ED",
     white: "#FFFFFF",
 };
 
-export const fontFamily = '"Inter", "Helvetica Neue", Arial, sans-serif';
+export const fontFamily = '"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif';
+export const headingFamily = '"Source Serif 4", Georgia, serif';
 
 export const container = {
     width: "100%",

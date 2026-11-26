@@ -1,8 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { graphql, Link, useStaticQuery } from "gatsby";
-import { GatsbyImage } from "gatsby-plugin-image";
-import { colors } from "../theme";
+import { graphql, useStaticQuery } from "gatsby";
+import ImageCard from "./ImageCard";
 
 const query = graphql`
     query FeaturedProducts {
@@ -38,7 +37,7 @@ const useStyles = makeStyles({
         display: "grid",
         gridAutoFlow: "column",
         gridAutoColumns: "minmax(240px, 280px)",
-        gap: 24,
+        gap: 20,
         overflowX: "auto",
         scrollSnapType: "x mandatory",
         paddingBottom: 16,
@@ -46,23 +45,6 @@ const useStyles = makeStyles({
     },
     card: {
         scrollSnapAlign: "start",
-        textDecoration: "none",
-        color: colors.ink,
-        "&:hover $image": { transform: "scale(1.04)" },
-    },
-    frame: {
-        borderRadius: 16,
-        overflow: "hidden",
-        background: colors.surface,
-    },
-    image: {
-        display: "block",
-        transition: "transform 400ms ease",
-    },
-    title: {
-        marginTop: 14,
-        fontWeight: 600,
-        fontSize: "1rem",
     },
 });
 
@@ -76,20 +58,13 @@ const FeaturedProducts = () => {
     return (
         <div className={classes.row}>
             {slides.map(({ node }) => (
-                <Link
+                <ImageCard
                     key={node.id}
                     to={`/products/${node.product.slug.current}`}
+                    title={node.title}
+                    image={node.thumbnail.asset.gatsbyImageData}
                     className={classes.card}
-                >
-                    <div className={classes.frame}>
-                        <GatsbyImage
-                            image={node.thumbnail.asset.gatsbyImageData}
-                            alt={node.title}
-                            className={classes.image}
-                        />
-                    </div>
-                    <div className={classes.title}>{node.title}</div>
-                </Link>
+                />
             ))}
         </div>
     );

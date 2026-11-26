@@ -8,14 +8,14 @@ const useStyles = makeStyles({
         display: "inline-block",
         fontFamily,
         fontSize: "0.95rem",
-        fontWeight: 600,
+        fontWeight: 500,
         lineHeight: 1,
-        padding: "14px 22px",
-        borderRadius: 999,
+        padding: "14px 20px",
+        borderRadius: 2,
         textDecoration: "none",
         whiteSpace: "nowrap",
         border: "1px solid transparent",
-        transition: "background 150ms, color 150ms, border-color 150ms",
+        transition: "background-color 150ms ease-out, border-color 150ms ease-out",
     },
     primary: {
         background: colors.brand,
@@ -25,19 +25,14 @@ const useStyles = makeStyles({
     secondary: {
         background: "transparent",
         color: colors.ink,
-        borderColor: colors.line,
-        "&:hover": { borderColor: colors.ink },
-    },
-    onDark: {
-        background: colors.white,
-        color: colors.ink,
-        "&:hover": { background: colors.accent },
+        borderColor: colors.ink,
+        "&:hover": { background: colors.surface },
     },
 });
 
 type Props = {
     to: string;
-    variant: "primary" | "secondary" | "onDark";
+    variant: "primary" | "secondary";
     children: React.ReactNode;
 };
 
