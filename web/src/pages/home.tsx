@@ -41,7 +41,7 @@ const useStyles = makeStyles({
         fontFamily: headingFamily,
         fontSize: "clamp(2.25rem, 4.5vw, 3.5rem)",
         lineHeight: 1.1,
-        fontWeight: 600,
+        fontWeight: 500,
         letterSpacing: "-0.01em",
     },
     lead: {
@@ -76,7 +76,7 @@ const useStyles = makeStyles({
         margin: 0,
         fontFamily: headingFamily,
         fontSize: "1.75rem",
-        fontWeight: 600,
+        fontWeight: 500,
     },
     textLink: {
         color: colors.brand,

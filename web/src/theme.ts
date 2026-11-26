@@ -9,8 +9,8 @@ export const colors = {
     white: "#FFFFFF",
 };
 
-export const fontFamily = '"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif';
-export const headingFamily = '"Source Serif 4", Georgia, serif';
+export const fontFamily = '"Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
+export const headingFamily = '"Fraunces", Georgia, serif';
 
 export const container = {
     width: "100%",
